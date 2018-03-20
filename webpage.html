@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/resources/jquery-3.3.1.js"></script>
+    <script>
+    var file = 0;
+    function update(){
+      $.ajaxSetup({
+        cache:false
+      });
+      $.getJSON("/resources/data.json", function(json){
+        file = json;
+      });
+      document.getElementById("uptime").innerHTML = file['Uptime'];
+      document.getElementById("button1").innerHTML = file['Button1'];
+      document.getElementById("button2").innerHTML = file['Button2'];
+      document.getElementById("temperature").innerHTML = file['Temperature'];
+      var t = setTimeout(update, 500);
+    }
+  </script>
+</head>
+<body onload ="update()">
+  <table>
+    <tr>
+        <th>Uptime</th>
+        <td id="uptime"/>
+        <td> seconds </td>
+    </tr>
+    <tr>
+        <th>Button1</th>
+        <td id="button1"/>
+        <td> 1=on 0=off </td>
+    </tr>
+    <tr>
+        <th>Button2</th>
+        <td id="button2"/>
+        <td> 1=on 0=off </td>
+    </tr>
+    <tr>
+        <th>Temperature</th>
+        <td id="temperature"/>
+        <td> F </td>
+    </tr>
+  </table>
+</body>
+<html>
