@@ -31,21 +31,18 @@
       var t = setTimeout(update, 100);
     }
     function updateTempHistory(){
-      $.ajaxSetup({
-        cache:false
-      });
       $.getJSON("/resources/tempHistory.json", function(json){
-        file = json;
+        hfile = json;
       });
-      var currentHour = file['Hours'];
+      var currentHour = hfile['Hours'];
       for(hoursLoaded; hoursLoaded < currentHour; hoursLoaded ++){
         var row = document.createElement("tr");
         var hourData = document.createElement("td");
         var minTempData = document.createElement("td");
         var maxTempData = document.createElement("td");
         var hour = document.createTextNode(hoursLoaded);
-        var minTemp = document.createTextNode(file[hoursLoaded['Min']]);
-        var maxTemp = document.createTextNode(file[hoursLoaded['Max']]);
+        var minTemp = document.createTextNode(hfile[hoursLoaded['Min']]);
+        var maxTemp = document.createTextNode(hfile[hoursLoaded['Max']]);
         hourData.appendChild(hour);
         minTempData.appendChild(minTemp);
         maxTempData.appendChild(maxTemp);
@@ -112,9 +109,9 @@
   <h1>Temperature History</h1>
   <tabel id = "tempTable">
       <tr>
-        <th>Hour</th>
-        <th>Minimum Temp (F)<th>
-        <th>Maximum Temp (F)<th>
+        <th id="hr">Hour</th>
+        <th id="minT">Minimum Temp (F)<th>
+        <th id="maxT">Maximum Temp (F)<th>
       </tr>
   </table>
 </body>
