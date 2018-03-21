@@ -7,6 +7,13 @@
     var file = 0;
     var hfile = 0;
     var hoursLoaded = 0;
+    function start(){
+	//update();
+	    setInterval(update, 100);
+	    setInterval(updateTempHistory,501);
+	
+    	//update();
+    }
     function update(){
       $.ajaxSetup({
         cache:false
@@ -28,34 +35,40 @@
       document.getElementById("temperatureC").innerHTML = tempC;
       document.getElementById("temperatureMin").innerHTML = file['TempMin'];
       document.getElementById("temperatureMax").innerHTML = file['TempMax'];
-      updateTempHistory();
-      var t = setTimeout(update, 100);
+      //var t = setTimeout(update, 100);
     }
     function updateTempHistory(){
+	$.ajaxSetup({
+		cache:false
+	});
       $.getJSON("/resources/tempHistory.json", function(json){
         hfile = json;
       });
       var currentHour = hfile['Hours'];
-      for(hoursLoaded; hoursLoaded < currentHour; hoursLoaded ++){
+      for(hoursLoaded; hoursLoaded < currentHour; hoursLoaded = hoursLoaded + 1){
         var row = document.createElement("tr");
         var hourData = document.createElement("td");
         var minTempData = document.createElement("td");
         var maxTempData = document.createElement("td");
-        var hour = document.createTextNode(hoursLoaded);
-        var minTemp = document.createTextNode(hfile[hoursLoaded['Min']]);
-        var maxTemp = document.createTextNode(hfile[hoursLoaded['Max']]);
-        hourData.appendChild(hour);
-        minTempData.appendChild(minTemp);
-        maxTempData.appendChild(maxTemp);
-        row.appendChild(hourData);
-        row.appendChild(minTempData);
-        row.appendChild(maxTempData);
-        document.getElementById("tempTable").appendChild(row);
+        var hour = document.createTextNode(" Hour " + hoursLoaded + " ");
+	var jsn = hfile[hoursLoaded];
+  	if(typeof jsn != 'undefined'){
+	  	var minTemp = document.createTextNode(" Min " + jsn['Min'] + "F ");
+		var maxTemp = document.createTextNode("Max " +jsn['Max'] + "F ");
+	        hourData.appendChild(hour);
+	        minTempData.appendChild(minTemp);
+	        maxTempData.appendChild(maxTemp);
+        	row.appendChild(hourData);
+	        row.appendChild(minTempData);
+        	row.appendChild(maxTempData);
+	        document.getElementById("tempTable").appendChild(row);
+	}
+	//var trigger = setTimeout(updateTempHistory, 501);
     }
     }
   </script>
 </head>
-<body onload ="update()">
+<body onload ="start()">
   <table>
     <tr>
         <th>System Date and Time</th>
@@ -108,7 +121,7 @@
 
   </table>
   <h1>Temperature History</h1>
-  <tabel id = "tempTable">
+  <tabel id = "tempTable" onload="updateTempHistory()">
       <tr>
         <th id="hr">Hour</th>
         <th id="minT">Minimum Temp (F)<th>
