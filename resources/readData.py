@@ -30,23 +30,27 @@ data['IP'] = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 
 while(True):
 
-        temp = ADC.read("P9_40") / 22.75
-        data['Temperature C'] = temp
+        timeNow = datetime.datetime.now()
+        timePassed = timeNow - startTime
+        data['DateTime'] = timeNow.isoformat()
+        data['Uptime'] = str(timePassed)
+
+        if(timePassed.seconds % 36000 == 0): #When an hour has elapsed we re set the max/min temperatures
+            tempMax = 0
+            tempMin = 1000
+
+        temp = ADC.read_raw("P9_40") / 22.75
+        data['Temperature C'] = '%2f' % temp
         temp = temp *9 /5
         temp = temp + 32
-        data['Temperature F'] = temp
-        #if(data['Uptime'] % 36000 == 0): #When an hour has elapsed we re set the max/min temperatures
-        #    tempMax = 0
-        #    tempMin = 1000
+        data['Temperature F'] = '%2f' % temp
+
         if(temp > tempMax):
             tempMax = temp
-            data['TempMax'] = temp
+            data['TempMax'] = '%2f' % temp
         if(temp < tempMin):
             tempMin = temp
-            data['TempMin'] = temp
-        timeNow = datetime.datetime.now()
-        data['DateTime'] = timeNow.isoformat()
-        data['Uptime'] = str(timeNow - startTime)
+            data['TempMin'] = '%2f' % temp
 
 
         if(button1 != GPIO.input("P9_11")):
