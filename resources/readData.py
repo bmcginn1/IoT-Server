@@ -40,17 +40,17 @@ while(True):
             tempMin = 1000
 
         temp = ADC.read_raw("P9_40") / 22.75
-        data['Temperature C'] = '%2f' % temp
+        data['Temperature C'] = '%.2f' % temp
         temp = temp *9 /5
         temp = temp + 32
-        data['Temperature F'] = '%2f' % temp
+        data['Temperature F'] = '%.2f' % temp
 
         if(temp > tempMax):
             tempMax = temp
-            data['TempMax'] = '%2f' % temp
+            data['TempMax'] = '%.2f' % temp
         if(temp < tempMin):
             tempMin = temp
-            data['TempMin'] = '%2f' % temp
+            data['TempMin'] = '%.2f' % temp
 
 
         if(button1 != GPIO.input("P9_11")):
@@ -69,4 +69,4 @@ while(True):
         with open('/var/www/html/resources/data.json', 'w') as outfile:
             json.dump(data, outfile)
 
-        time.sleep(.5)
+        time.sleep(.1)
