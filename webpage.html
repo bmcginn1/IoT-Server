@@ -11,15 +11,18 @@
       $.getJSON("/resources/data.json", function(json){
         file = json;
       });
-      document.getElementById("upTime").innerHTML = file['Uptime'].toFixed(2);
+      var upTime = file['Uptime'];
+      var tempC = file['Temperature C'];
+      var tempF = file['Temperature F'];
+      document.getElementById("upTime").innerHTML = upTime.toFixed(2);
       document.getElementById("dateTime").innerHTML = file['DateTime'];
       document.getElementById("ip").innerHTML = file['IP'];
       document.getElementById("button1").innerHTML = file['Button1'];
       document.getElementById("button2").innerHTML = file['Button2'];
       document.getElementById("lastChange").innerHTML = file['LastChange'];
       document.getElementById("lastButton").innerHTML = file['LastButton'];
-      document.getElementById("temperatureF").innerHTML = file['Temperature F'];
-      document.getElementById("temperatureC").innerHTML = file['Temperature C'];
+      document.getElementById("temperatureF").innerHTML = tempF.toFixed(2);
+      document.getElementById("temperatureC").innerHTML = tempC.toFixes(2);
       document.getElementById("temperatureMin").innerHTML = file['TempMin'];
       document.getElementById("temperatureMax").innerHTML = file['TempMax'];
       var t = setTimeout(update, 100);
