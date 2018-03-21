@@ -13,7 +13,7 @@ button1 = GPIO.input("P9_11")
 button2 = GPIO.input("P9_12")
 tempMin = 1000;
 tempMax = 0;
-history ={}
+history ={'Hours': 0}
 data = {'Uptime': 0,
         'Button1': 0,
         'Button2': 0,
@@ -37,9 +37,10 @@ while(True):
         data['DateTime'] = timeNow.isoformat()
         data['Uptime'] = str(timePassed)
 
-        if(timePassed.seconds % 36000 == 0): #When an hour has elapsed we re set the max/min temperatures
-            history[timePassed.hours] = {'Min': ('%.2f' % tempMin), 'Max': ('%.2f' % tempMax)} 
-            with open('/var/www/html/resouces/history.json', 'w') as outfile:
+        if(timePassed.seconds % 1 == 0): #When an hour has elapsed we re set the max/min temperatures
+            history['Hours']= timePassed.seconds
+            history[timePassed.seconds] = {'Min': ('%.2f' % tempMin), 'Max': ('%.2f' % tempMax)}
+            with open('/var/www/html/resouces/tempHistory.json', 'w') as outfile:
                 juson.dump(history, outfile)
             tempMax = 0
             tempMin = 1000
