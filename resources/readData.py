@@ -25,9 +25,10 @@ data = {'Uptime': 0,
         'TempMin': 0,
         'TempMax': 0}
 
+ni.ifaddresses('eth0')
+data['IP'] = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+
 while(True):
-        ni.ifaddresses('eth0')
-        data['IP'] = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 
         temp = ADC.read_raw("P9_40") / 22.75
         data['Temperature C'] = temp
@@ -45,7 +46,7 @@ while(True):
             data['TempMin'] = temp
         timeNow = datetime.datetime.now()
         data['DateTime'] = timeNow.isoformat()
-        data['Uptime'] = str(startTime - timeNow)
+        data['Uptime'] = str(timeNow - startTime)
 
 
         if(button1 != GPIO.input("P9_11")):
@@ -64,4 +65,4 @@ while(True):
         with open('/var/www/html/resources/data.json', 'w') as outfile:
             json.dump(data, outfile)
 
-        time.sleep(.1)
+        time.sleep(.5)
