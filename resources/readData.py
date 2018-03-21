@@ -1,5 +1,6 @@
 import json
 import time
+time.sleep(30)
 import datetime
 import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.ADC as ADC
