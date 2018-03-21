@@ -1,6 +1,6 @@
 import json
 import time
-from time import localtime
+import datetime
 import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.ADC as ADC
 import netifaces as ni
@@ -8,6 +8,7 @@ import netifaces as ni
 GPIO.setup("P9_11", GPIO.IN)
 GPIO.setup("P9_12", GPIO.IN)
 ADC.setup()
+startTime = datetime.datetime.now()
 button1 = GPIO.input("P9_11")
 button2 = GPIO.input("P9_12")
 tempMin = 1000;
@@ -33,17 +34,19 @@ while(True):
         temp = temp *9 /5
         temp = temp + 32
         data['Temperature F'] = temp
-        if(data['Uptime'] % 36000 == 0): #When an hour has elapsed we re set the max/min temperatures
-            tempMax = 0
-            tempMin = 1000
+        #if(data['Uptime'] % 36000 == 0): #When an hour has elapsed we re set the max/min temperatures
+        #    tempMax = 0
+        #    tempMin = 1000
         if(temp > tempMax):
             tempMax = temp
             data['TempMax'] = temp
         if(temp < tempMin):
             tempMin = temp
             data['TempMin'] = temp
-        data['Uptime'] += .1
-        data['DateTime'] = time.strftime("%d %b %Y %H:%M:%S", localtime())
+        timeNow = datetime.datetime.now()
+        data['DateTime'] = timeNow.isoformat()
+        data['Uptime'] = startTime - timeNow
+
 
         if(button1 != GPIO.input("P9_11")):
             data['Button1'] = GPIO.input("P9_11")
@@ -61,4 +64,4 @@ while(True):
         with open('/var/www/html/resources/data.json', 'w') as outfile:
             json.dump(data, outfile)
 
-        time.sleep(.5)
+        time.sleep(.1)
