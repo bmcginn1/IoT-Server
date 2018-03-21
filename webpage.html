@@ -14,7 +14,8 @@
       document.getElementById("uptime").innerHTML = file['Uptime'];
       document.getElementById("button1").innerHTML = file['Button1'];
       document.getElementById("button2").innerHTML = file['Button2'];
-      document.getElementById("temperature").innerHTML = file['Temperature'];
+      document.getElementById("temperatureF").innerHTML = file['Temperature F'];
+      document.getElementById("temperatureC").innerHTML = file['Temperature C'];
       var t = setTimeout(update, 500);
     }
   </script>
@@ -38,8 +39,13 @@
     </tr>
     <tr>
         <th>Temperature</th>
-        <td id="temperature"/>
+        <td id="temperatureF"/>
         <td> F </td>
+    </tr>
+    <tr>
+	<th>Temperature</th>
+	<td id = "temperatureC"/>
+	<td> C </td>
     </tr>
   </table>
 </body>
