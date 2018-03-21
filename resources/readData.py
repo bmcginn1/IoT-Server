@@ -13,6 +13,7 @@ button1 = GPIO.input("P9_11")
 button2 = GPIO.input("P9_12")
 tempMin = 1000;
 tempMax = 0;
+history ={}
 data = {'Uptime': 0,
         'Button1': 0,
         'Button2': 0,
@@ -23,7 +24,8 @@ data = {'Uptime': 0,
         'LastChange': '',
         'LastButton': '',
         'TempMin': 0,
-        'TempMax': 0}
+        'TempMax': 0
+        }
 
 ni.ifaddresses('eth0')
 data['IP'] = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
@@ -36,6 +38,9 @@ while(True):
         data['Uptime'] = str(timePassed)
 
         if(timePassed.seconds % 36000 == 0): #When an hour has elapsed we re set the max/min temperatures
+            history[timePassed.hours] = {'Min': ('%.2f' % tempMin), 'Max': ('%.2f' % tempMax)} 
+            with open('/var/www/html/resouces/history.json', 'w') as outfile:
+                juson.dump(history, outfile)
             tempMax = 0
             tempMin = 1000
 

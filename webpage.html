@@ -5,6 +5,7 @@
     <script src="/resources/jquery-3.3.1.js"></script>
     <script>
     var file = 0;
+    var loadedTemps = 0;
     function update(){
       $.ajaxSetup({
         cache:false
@@ -26,7 +27,20 @@
       document.getElementById("temperatureC").innerHTML = tempC;
       document.getElementById("temperatureMin").innerHTML = file['TempMin'];
       document.getElementById("temperatureMax").innerHTML = file['TempMax'];
+      updateTempHistory();
       var t = setTimeout(update, 100);
+    }
+    function updateTempHistory(){
+      $.ajaxSetup({
+        cache:false
+      });
+      $.getJSON("/resources/history.json", function(json){
+        file = json;
+      });
+      var newDiv = document.createElement("div");
+      var Temp = document.createTextNode("Temperature");
+      newDiv.appendChild(Temp);
+      document.body.appendChild(newDiv);
     }
   </script>
 </head>
@@ -81,6 +95,7 @@
 	     <td> F </td>
     </tr>
 
+    <h1>Temperature History</h1>
 
   </table>
 </body>
