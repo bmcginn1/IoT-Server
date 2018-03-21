@@ -52,19 +52,20 @@ while(True):
             tempMin = temp
             data['TempMin'] = '%.2f' % temp
 
+        button1State = GPIO.input("P9_11")
+        button2State = GPIO.input("P9_12")
 
-        if(button1 != GPIO.input("P9_11")):
-            data['Button1'] = GPIO.input("P9_11")
+        if(button1 != button1State):
+            button1 = button1State
+            data['Button1'] = button1
             data['LastButton'] = 'Button1/P9_11'
             data['LastChange'] = data['DateTime']
 
-        if(button2 != GPIO.input("P9_12")):
-            data['Button2'] = GPIO.input("P9_12")
+        if(button2 != button2State):
+            button2 = button2State
+            data['Button2'] = button2
             data['LastButton'] = 'Button2/P9_12'
             data['LastChange'] = data['DateTime']
-
-#        data['Button1'] = GPIO.input("P9_11")
-#        data['Button2'] = GPIO.input("P9_12")
 
         with open('/var/www/html/resources/data.json', 'w') as outfile:
             json.dump(data, outfile)
