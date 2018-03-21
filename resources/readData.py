@@ -30,7 +30,7 @@ data['IP'] = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 
 while(True):
 
-        temp = ADC.read_raw("P9_40") / 22.75
+        temp = ADC.read("P9_40") / 22.75
         data['Temperature C'] = temp
         temp = temp *9 /5
         temp = temp + 32
