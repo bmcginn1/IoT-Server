@@ -11,7 +11,7 @@
       $.getJSON("/resources/data.json", function(json){
         file = json;
       });
-      document.getElementById("upTime").innerHTML = file['Uptime'];
+      document.getElementById("upTime").innerHTML = file['Uptime'].toFixed(2);
       document.getElementById("dateTime").innerHTML = file['DateTime'];
       document.getElementById("ip").innerHTML = file['IP'];
       document.getElementById("button1").innerHTML = file['Button1'];

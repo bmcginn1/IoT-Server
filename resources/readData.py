@@ -54,11 +54,11 @@ while(True):
             data['Button2'] = GPIO.input("P9_12")
             data['LastButton'] = 'Button2/P9_12'
             data['LastChange'] = data['DateTime']
-    
+
 #        data['Button1'] = GPIO.input("P9_11")
 #        data['Button2'] = GPIO.input("P9_12")
-        
-        with open('data.json', 'w') as outfile:
+
+        with open('/var/www/html/resources/data.json', 'w') as outfile:
             json.dump(data, outfile)
 
-        time.sleep(.1)
+        time.sleep(.5)
