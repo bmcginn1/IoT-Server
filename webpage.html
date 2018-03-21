@@ -34,7 +34,7 @@
       $.ajaxSetup({
         cache:false
       });
-      $.getJSON("/resources/history.json", function(json){
+      $.getJSON("/resources/tempHistory.json", function(json){
         file = json;
       });
       var currentHour = file['Hours'];

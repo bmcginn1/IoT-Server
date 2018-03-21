@@ -40,7 +40,7 @@ while(True):
         if(timePassed.seconds % 1 == 0): #When an hour has elapsed we re set the max/min temperatures
             history['Hours']= timePassed.seconds
             history[timePassed.seconds] = {'Min': ('%.2f' % tempMin), 'Max': ('%.2f' % tempMax)}
-            with open('/var/www/html/resouces/tempHistory.json', 'w') as outfile:
+            with open('/var/www/html/resources/tempHistory.json', 'w') as outfile:
                 juson.dump(history, outfile)
             tempMax = 0
             tempMin = 1000
