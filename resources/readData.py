@@ -45,7 +45,7 @@ while(True):
             data['TempMin'] = temp
         timeNow = datetime.datetime.now()
         data['DateTime'] = timeNow.isoformat()
-        data['Uptime'] = startTime - timeNow
+        data['Uptime'] = str(startTime - timeNow)
 
 
         if(button1 != GPIO.input("P9_11")):
