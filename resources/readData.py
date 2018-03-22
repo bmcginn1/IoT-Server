@@ -39,8 +39,9 @@ while(True):
         data['Uptime'] = str(timePassed)
 
         if(timePassed.seconds % 3600 == 0): #When an hour has elapsed we re set the max/min temperatures
-            history['Hours']= timePassed.hours
-            history[timePassed.seconds] = {'Min': ('%.2f' % tempMin), 'Max': ('%.2f' % tempMax)}
+            hours = timePassed.seconds / 3600
+            history['Hours']= hours
+            history[hours] = {'Min': ('%.2f' % tempMin), 'Max': ('%.2f' % tempMax)}
             with open('/var/www/html/resources/tempHistory.json', 'w') as houtfile:
                 json.dump(history, houtfile)
             tempMax = 0
