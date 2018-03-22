@@ -1,5 +1,6 @@
 import json
 import time
+time.sleep(30)
 import datetime
 import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.ADC as ADC
@@ -37,8 +38,8 @@ while(True):
         data['DateTime'] = timeNow.isoformat()
         data['Uptime'] = str(timePassed)
 
-        if(timePassed.seconds % 1 == 0): #When an hour has elapsed we re set the max/min temperatures
-            history['Hours']= timePassed.seconds
+        if(timePassed.seconds % 3600 == 0): #When an hour has elapsed we re set the max/min temperatures
+            history['Hours']= timePassed.hours
             history[timePassed.seconds] = {'Min': ('%.2f' % tempMin), 'Max': ('%.2f' % tempMax)}
             with open('/var/www/html/resources/tempHistory.json', 'w') as houtfile:
                 json.dump(history, houtfile)
