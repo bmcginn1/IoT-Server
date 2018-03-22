@@ -40,6 +40,7 @@ while(True):
 
         if(timePassed.seconds % 3600 == 0): #When an hour has elapsed we re set the max/min temperatures
             hours = timePassed.seconds / 3600
+            hours = int(hours)
             history['Hours']= hours
             history[hours] = {'Min': ('%.2f' % tempMin), 'Max': ('%.2f' % tempMax)}
             with open('/var/www/html/resources/tempHistory.json', 'w') as houtfile:
